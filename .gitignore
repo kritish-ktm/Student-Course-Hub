@@ -1,0 +1,31 @@
+# ============================================
+#  Student Course Hub — .gitignore
+# ============================================
+
+# Uploaded images (too large for git, store separately)
+assets/images/
+
+# Environment / config overrides
+.env
+config.local.php
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# PHP logs
+*.log
+error_log
+
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
