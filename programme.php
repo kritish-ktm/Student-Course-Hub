@@ -31,7 +31,10 @@ if (!$programme) {
 }
 
 $modules = $db->prepare("
-    SELECT m.*, pm.Year, s.Name AS LeaderName,
+    SELECT m.*, pm.Year,
+           s.Name AS LeaderName,
+           s.Title AS LeaderTitle,
+           s.Department AS LeaderDepartment,
            (SELECT COUNT(*) FROM ProgrammeModules pm2 WHERE pm2.ModuleID = m.ModuleID) AS SharedCount
     FROM ProgrammeModules pm
     JOIN Modules m ON pm.ModuleID = m.ModuleID
@@ -102,7 +105,7 @@ include __DIR__ . '/includes/header.php';
                 <div class="meta-chips">
                     <span class="meta-chip"><i class="bi bi-calendar3"></i> <?= $programme['LevelID'] == 1 ? '3 Years Full-time' : '1 Year Full-time' ?></span>
                     <span class="meta-chip"><i class="bi bi-journal-text"></i> <?= count($allModules) ?> Modules</span>
-                    <span class="meta-chip"><i class="bi bi-geo-alt"></i> London</span>
+                    <span class="meta-chip"><i class="bi bi-geo-alt"></i> Copenhagen</span>
                 </div>
                 <div class="programme-leader-row">
                     <?php
@@ -175,7 +178,18 @@ include __DIR__ . '/includes/header.php';
                             echo h($mi ?: '?');
                             ?>
                         </div>
-                        <span><?= h($mod['LeaderName'] ?? 'TBC') ?></span>
+                        <div>
+                            <span style="font-weight:600; font-size:0.82rem; display:block">
+                                <?= h($mod['LeaderName'] ?? 'TBC') ?>
+                            </span>
+                            <?php if (!empty($mod['LeaderTitle']) || !empty($mod['LeaderDepartment'])): ?>
+                            <span style="font-size:0.75rem; color:var(--grey-400); display:block">
+                                <?= h($mod['LeaderTitle'] ?? '') ?>
+                                <?php if (!empty($mod['LeaderTitle']) && !empty($mod['LeaderDepartment'])): ?> &mdash; <?php endif; ?>
+                                <?= h($mod['LeaderDepartment'] ?? '') ?>
+                            </span>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
                 <?php endforeach; ?>

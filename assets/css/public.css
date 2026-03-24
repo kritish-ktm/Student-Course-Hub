@@ -46,7 +46,13 @@ img { max-width: 100%; display: block; }
 /* ---- Layout ---- */
 .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
 
+<<<<<<< HEAD
 /*ANIMATIONS */
+=======
+/* ================================================
+   ANIMATIONS
+================================================ */
+>>>>>>> 8a0a1e23c8ef204796043b66d82e36e2f3536cd3
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(28px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -79,7 +85,13 @@ img { max-width: 100%; display: block; }
 .reveal-delay-3    { transition-delay: 0.24s; }
 .reveal-delay-4    { transition-delay: 0.32s; }
 
+<<<<<<< HEAD
 /*TOP BAR (thin red strip above header)*/
+=======
+/* ================================================
+   TOP BAR (thin red strip above header)
+================================================ */
+>>>>>>> 8a0a1e23c8ef204796043b66d82e36e2f3536cd3
 .top-bar {
     background: var(--ku-red);
     color: rgba(255,255,255,0.85);
@@ -97,7 +109,13 @@ img { max-width: 100%; display: block; }
 .top-bar a { color: rgba(255,255,255,0.85); text-decoration: none; }
 .top-bar a:hover { color: var(--white); text-decoration: underline; }
 
+<<<<<<< HEAD
 /*HEADER */
+=======
+/* ================================================
+   HEADER
+================================================ */
+>>>>>>> 8a0a1e23c8ef204796043b66d82e36e2f3536cd3
 .site-header {
     background: var(--white);
     border-bottom: 3px solid var(--ku-red);
@@ -273,7 +291,13 @@ img { max-width: 100%; display: block; }
     display: flex; align-items: center; justify-content: center; gap: 6px;
 }
 
+<<<<<<< HEAD
 /* SECTIONS */
+=======
+/* ================================================
+   SECTIONS
+================================================ */
+>>>>>>> 8a0a1e23c8ef204796043b66d82e36e2f3536cd3
 .section { padding: 72px 0; }
 .section-grey { background: var(--grey-50); }
 .section-red  { background: var(--ku-red); color: var(--white); }
@@ -290,14 +314,24 @@ img { max-width: 100%; display: block; }
     gap: 16px; margin-bottom: 40px;
 }
 
+<<<<<<< HEAD
 /* Divider line style */
+=======
+/* Divider line — KU style */
+>>>>>>> 8a0a1e23c8ef204796043b66d82e36e2f3536cd3
 .ku-divider {
     width: 48px; height: 3px;
     background: var(--ku-red);
     margin-bottom: 20px;
 }
 
+<<<<<<< HEAD
 /* PROGRAMME CARDS*/
+=======
+/* ================================================
+   PROGRAMME CARDS — KU editorial style
+================================================ */
+>>>>>>> 8a0a1e23c8ef204796043b66d82e36e2f3536cd3
 .programme-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -371,7 +405,13 @@ img { max-width: 100%; display: block; }
 }
 .programme-card:hover .card-arrow { transform: translateX(5px); }
 
+<<<<<<< HEAD
 /*INFO TILES*/
+=======
+/* ================================================
+   INFO TILES
+================================================ */
+>>>>>>> 8a0a1e23c8ef204796043b66d82e36e2f3536cd3
 .info-tiles {
     display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
     border: 1px solid var(--grey-200);
