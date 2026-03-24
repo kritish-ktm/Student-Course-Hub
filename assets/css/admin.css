@@ -43,22 +43,22 @@ a:hover { text-decoration: underline; }
 ================================================ */
 .sidebar {
     width: var(--sidebar-w);
-    background: var(--black);
+    background: var(--ku-red);
     display: flex; flex-direction: column;
     position: fixed; top: 0; left: 0; bottom: 0; z-index: 200;
     overflow-y: auto;
-    border-right: 3px solid var(--ku-red);
+    border-right: 3px solid var(--ku-red-dark);
 }
 
 .sidebar-logo {
     padding: 20px 20px 18px;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
     display: flex; align-items: center; gap: 12px;
     text-decoration: none;
 }
 .sidebar-logo-emblem {
     width: 36px; height: 36px; border-radius: 50%;
-    background: var(--ku-red);
+    background: var(--ku-red-dark);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
 }
@@ -70,7 +70,7 @@ a:hover { text-decoration: underline; }
 .sidebar-section { padding: 20px 12px 4px; }
 .sidebar-section-label {
     font-size: 0.63rem; font-weight: 700; letter-spacing: 0.14em;
-    text-transform: uppercase; color: rgba(255,255,255,0.25);
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
     padding: 0 10px; margin-bottom: 4px;
 }
 .sidebar-nav { list-style: none; }
@@ -78,26 +78,26 @@ a:hover { text-decoration: underline; }
 .sidebar-nav a {
     display: flex; align-items: center; gap: 10px;
     padding: 9px 12px; border-radius: var(--radius);
-    color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 500;
+    color: rgba(255,255,255,0.75); font-size: 0.85rem; font-weight: 500;
     text-decoration: none; transition: var(--transition);
     border-left: 3px solid transparent;
 }
-.sidebar-nav a:hover { color: var(--white); background: rgba(255,255,255,0.05); border-left-color: rgba(144,26,30,0.5); text-decoration: none; }
-.sidebar-nav a.active { color: var(--white); background: var(--ku-red); border-left-color: var(--ku-red); }
+.sidebar-nav a:hover { color: var(--white); background: rgba(0,0,0,0.2); border-left-color: rgba(255,255,255,0.5); text-decoration: none; }
+.sidebar-nav a.active { color: var(--white); background: var(--ku-red-dark); border-left-color: var(--white); }
 .nav-icon { font-size: 1rem; width: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 .sidebar-footer {
     margin-top: auto; padding: 14px 12px;
-    border-top: 1px solid rgba(255,255,255,0.07);
+    border-top: 1px solid rgba(255,255,255,0.2);
     display: flex; flex-direction: column; gap: 2px;
 }
 .sidebar-footer a {
     display: flex; align-items: center; gap: 10px;
-    color: rgba(255,255,255,0.4); font-size: 0.82rem;
+    color: rgba(255,255,255,0.75); font-size: 0.82rem;
     padding: 8px 12px; border-radius: var(--radius);
     transition: var(--transition); text-decoration: none;
 }
-.sidebar-footer a:hover { color: var(--white); background: rgba(255,255,255,0.05); text-decoration: none; }
+.sidebar-footer a:hover { color: var(--white); background: rgba(0,0,0,0.2); text-decoration: none; }
 .sidebar-footer a.danger:hover { color: #ef9a9a; }
 
 /* ================================================
@@ -297,14 +297,14 @@ tbody tr:hover { background: var(--grey-50); }
 ================================================ */
 .login-page { min-height: 100vh; display: flex; background: var(--grey-50); }
 .login-left {
-    flex: 1; background: var(--black);
+    flex: 1; background: var(--ku-red);
     display: flex; align-items: center; justify-content: center;
     padding: 60px; position: relative; overflow: hidden;
 }
 .login-left::after {
     content: ''; position: absolute;
     bottom: 0; left: 0; right: 0; height: 4px;
-    background: var(--ku-red);
+    background: var(--ku-red-dark);
 }
 .login-left-content { position: relative; z-index: 2; color: var(--white); max-width: 380px; }
 .login-left-emblem {
