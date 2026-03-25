@@ -63,18 +63,36 @@ $staff = $db->query("
     ORDER BY COALESCE(NULLIF(s.Department,''),'ZZZ'), s.Name
 ")->fetchAll();
 
-// Fetch actual module names per staff member
+// Fetch modules led by each staff member
 $modulesByStaff = [];
-$moduleRows = $db->query("SELECT ModuleLeaderID, ModuleName FROM Modules WHERE ModuleLeaderID IS NOT NULL ORDER BY ModuleName")->fetchAll();
+$moduleRows = $db->query("SELECT ModuleLeaderID, ModuleID, ModuleName FROM Modules WHERE ModuleLeaderID IS NOT NULL ORDER BY ModuleName")->fetchAll();
 foreach ($moduleRows as $row) {
-    $modulesByStaff[$row['ModuleLeaderID']][] = $row['ModuleName'];
+    $modulesByStaff[$row['ModuleLeaderID']][] = [
+        'id'   => $row['ModuleID'],
+        'name' => $row['ModuleName']
+    ];
 }
 
-// Fetch actual programme names per staff member
+// Fetch programmes each staff member leads directly
 $programmesByStaff = [];
 $progRows = $db->query("SELECT ProgrammeLeaderID, ProgrammeName FROM Programmes WHERE ProgrammeLeaderID IS NOT NULL ORDER BY ProgrammeName")->fetchAll();
 foreach ($progRows as $row) {
     $programmesByStaff[$row['ProgrammeLeaderID']][] = $row['ProgrammeName'];
+}
+
+// Fetch programmes connected to each staff member THROUGH their modules
+// e.g. Dr. Alice leads Module 1 -> Module 1 is in BSc CS, BSc SE etc -> she teaches those programmes
+$teachingInByStaff = [];
+$teachingRows = $db->query("
+    SELECT DISTINCT m.ModuleLeaderID, p.ProgrammeName, p.ProgrammeID
+    FROM Modules m
+    JOIN ProgrammeModules pm ON pm.ModuleID = m.ModuleID
+    JOIN Programmes p ON p.ProgrammeID = pm.ProgrammeID
+    WHERE m.ModuleLeaderID IS NOT NULL
+    ORDER BY p.ProgrammeName
+")->fetchAll();
+foreach ($teachingRows as $row) {
+    $teachingInByStaff[$row['ModuleLeaderID']][$row['ProgrammeID']] = $row['ProgrammeName'];
 }
 
 $pageTitle='Staff'; include __DIR__.'/includes/admin_header.php'; ?>
@@ -131,7 +149,7 @@ $pageTitle='Staff'; include __DIR__.'/includes/admin_header.php'; ?>
                     <th>Name</th>
                     <th>Title</th>
                     <th>Modules Led</th>
-                    <th>Programmes Led</th>
+                    <th>Connected Programmes</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -160,12 +178,12 @@ $pageTitle='Staff'; include __DIR__.'/includes/admin_header.php'; ?>
                 <td>
                     <?php if (!empty($modulesByStaff[$s['StaffID']])): ?>
                     <div style="display:flex; flex-direction:column; gap:3px">
-                        <?php foreach ($modulesByStaff[$s['StaffID']] as $modName): ?>
+                        <?php foreach ($modulesByStaff[$s['StaffID']] as $mod): ?>
                         <span style="display:inline-flex; align-items:center; gap:4px;
                                      background:var(--info-bg); color:var(--info);
                                      font-size:0.72rem; font-weight:600;
-                                     padding:2px 8px; border-radius:2px; white-space:nowrap">
-                            <i class="bi bi-journal-text"></i> <?= h($modName) ?>
+                                     padding:2px 8px; border-radius:2px;">
+                            <i class="bi bi-journal-text"></i> <?= h($mod['name']) ?>
                         </span>
                         <?php endforeach; ?>
                     </div>
@@ -174,13 +192,31 @@ $pageTitle='Staff'; include __DIR__.'/includes/admin_header.php'; ?>
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if (!empty($programmesByStaff[$s['StaffID']])): ?>
+                    <?php
+                    // Programmes they directly lead
+                    $directProgs   = $programmesByStaff[$s['StaffID']] ?? [];
+                    // Programmes they teach in via modules
+                    $teachingProgs = $teachingInByStaff[$s['StaffID']] ?? [];
+                    ?>
+                    <?php if (!empty($directProgs) || !empty($teachingProgs)): ?>
                     <div style="display:flex; flex-direction:column; gap:3px">
-                        <?php foreach ($programmesByStaff[$s['StaffID']] as $progName): ?>
+                        <?php foreach ($directProgs as $progName): ?>
+                        <span style="display:inline-flex; align-items:center; gap:4px;
+                                     background:var(--ku-red); color:var(--white);
+                                     font-size:0.72rem; font-weight:600;
+                                     padding:2px 8px; border-radius:2px;"
+                              title="Programme Leader">
+                            <i class="bi bi-mortarboard-fill"></i> <?= h($progName) ?>
+                        </span>
+                        <?php endforeach; ?>
+                        <?php foreach ($teachingProgs as $pid => $progName):
+                            // Skip if already shown as direct leader
+                            if (in_array($progName, $directProgs)) continue; ?>
                         <span style="display:inline-flex; align-items:center; gap:4px;
                                      background:var(--ku-red-light); color:var(--ku-red);
                                      font-size:0.72rem; font-weight:600;
-                                     padding:2px 8px; border-radius:2px; white-space:nowrap">
+                                     padding:2px 8px; border-radius:2px;"
+                              title="Teaches module in this programme">
                             <i class="bi bi-mortarboard"></i> <?= h($progName) ?>
                         </span>
                         <?php endforeach; ?>
