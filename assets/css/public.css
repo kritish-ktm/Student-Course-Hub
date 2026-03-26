@@ -305,6 +305,16 @@ img { max-width: 100%; display: block; }
     background: var(--grey-200);
     border: 1px solid var(--grey-200);
 }
+
+.card-wrapper {
+    display: flex;
+}
+
+.card-wrapper .programme-card {
+    width: 100%;
+    height: 100%;
+}
+
 .programme-card {
     background: var(--white);
     display: flex; flex-direction: column;
